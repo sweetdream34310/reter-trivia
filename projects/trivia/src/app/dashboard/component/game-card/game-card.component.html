@@ -1,0 +1,143 @@
+<div class="innerli">
+<div *ngIf="categoryList" class="T-tagging ellipsis" >{{categoryList.join(", ")}}</div>
+  <div class="row">
+    <ng-container *ngIf="game.gameOptions.playerMode == PlayerMode.Single">
+      <div class="col-xs-12 textcenter clearfix">
+        <app-user-card [userId]="user?.userId" [type]="userCardType.USER_WEB_IMAGE_NAME_LOCATION_VERTICAL"></app-user-card>
+        <hr>
+        <div class="dark">Score {{game.stats[user?.userId].score}}</div>
+        <div class="div-badge">
+          <ng-template *ngIf="game?.gameOptions.isBadgeWithCategory; else showBadge" ngFor let-i="index"  let-badge [ngForOf]="totalBadges" >
+            <div class="sprite {{applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class ? applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class : 'score0'}}"></div>
+          </ng-template>
+          <ng-template #showBadge >
+            <div [ngClass]="game.stats[user?.userId].score >= 1?'score1':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user?.userId].score >= 2?'score2':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user?.userId].score >= 3?'score3':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user?.userId].score >= 4?'score4':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user?.userId].score >= 5?'score5':'score0'" class="sprite"></div>
+          </ng-template>
+
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="game.gameOptions.playerMode == PlayerMode.Opponent && game.playerIds.length == 1">
+      <div class="textcenter clearfix">
+        <div class="col-xs-6 div-right-border">
+          <app-user-card [userId]="user.userId" [type]="userCardType.USER_WEB_IMAGE_NAME_LOCATION_VERTICAL"></app-user-card>
+          <span class="vs"> Vs </span>
+        </div>
+        <div class="col-xs-6">
+          <div class="yourimg ">
+
+            <div class="sprite no-opponent"></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="textcenter clearfix">
+        <div class="col-xs-6 div-right-border div-score">
+          <div class="dark">Score {{game.stats[user.userId].score}}</div>
+        </div>
+      </div>
+      <div class="text-align clearfix">
+        <div class="div-width div-right-border float-left">
+          <ng-template *ngIf="game?.gameOptions.isBadgeWithCategory; else showBadgeForSinglePlayer" ngFor let-i="index"  let-badge [ngForOf]="totalBadges" >
+            <div class="sprite {{applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class ? applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class : 'score0'}}"></div>
+          </ng-template>
+          <ng-template  #showBadgeForSinglePlayer>
+            <div [ngClass]="game.stats[user.userId].score >= 1?'score1':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user.userId].score >= 2?'score2':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user.userId].score >= 3?'score3':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user.userId].score >= 4?'score4':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[user.userId].score >= 5?'score5':'score0'" class="sprite"></div>
+          </ng-template>
+
+        </div>
+
+        <div class="div-width text-align padding-right float-right">
+          <div class="sprite score0"></div>
+          <div class="sprite score0"></div>
+          <div class="sprite score0"></div>
+          <div class="sprite score0"></div>
+          <div class="sprite score0"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="game.gameOptions.playerMode == PlayerMode.Opponent && game.playerIds.length > 1">
+      <div class="textcenter clearfix">
+        <div class="col-xs-6 div-right-border">
+          <app-user-card [userId]="user.userId" [type]="userCardType.USER_WEB_IMAGE_NAME_LOCATION_VERTICAL"></app-user-card>
+          <span class="vs"> Vs </span>
+        </div>
+        <div class="col-xs-6">
+          <app-user-card [userId]="otherUserId" [type]="userCardType.USER_WEB_IMAGE_NAME_LOCATION_VERTICAL"></app-user-card>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="col-xs-6 div-right-border div-score score-text-align">
+          <div class="dark">Score {{game.stats[user.userId].score}}</div>
+        </div>
+        <div class="col-xs-6 div-score score-text-align">
+          <div class="dark">Score {{game.stats[otherUserId].score}}</div>
+        </div>
+      </div>
+      <div class="text-align clearfix">
+        <div class="div-width div-right-border float-left">
+          <ng-template  *ngIf="game?.gameOptions?.isBadgeWithCategory; else showBadgeForTwoPlayer" ngFor let-i="index"  let-badge [ngForOf]="totalBadges" >
+              <div class="sprite {{applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class ? applicationSettings?.badges[game?.stats[user?.userId]?.badge[i]]?.class : 'score0'}}"></div>
+          </ng-template>
+          <ng-template #showBadgeForTwoPlayer >
+              <div [ngClass]="game.stats[user.userId].score >= 1?'score1':'score0'" class="sprite"></div>
+              <div [ngClass]="game.stats[user.userId].score >= 2?'score2':'score0'" class="sprite"></div>
+              <div [ngClass]="game.stats[user.userId].score >= 3?'score3':'score0'" class="sprite"></div>
+              <div [ngClass]="game.stats[user.userId].score >= 4?'score4':'score0'" class="sprite"></div>
+              <div [ngClass]="game.stats[user.userId].score >= 5?'score5':'score0'" class="sprite"></div>
+          </ng-template>
+
+        </div>
+
+        <div class="div-width text-align padding-right float-right">
+          <ng-template *ngIf="game?.gameOptions?.isBadgeWithCategory; else showBadgeForTwoPlayerOpponent" ngFor let-i="index"  let-badge [ngForOf]="totalBadges" >
+              <div class="sprite {{applicationSettings?.badges[game?.stats[otherUserId].badge[i]]?.class ? applicationSettings?.badges[game?.stats[otherUserId].badge[i]]?.class : 'score0'}}"></div>
+          </ng-template>
+          <ng-template #showBadgeForTwoPlayerOpponent >
+            <div [ngClass]="game.stats[otherUserId].score >= 1?'score1':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[otherUserId].score >= 2?'score2':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[otherUserId].score >= 3?'score3':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[otherUserId].score >= 4?'score4':'score0'" class="sprite"></div>
+            <div [ngClass]="game.stats[otherUserId].score >= 5?'score5':'score0'" class="sprite"></div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+    <div class="col-xs-12 div-spacing textcenter" *ngIf="game.gameOptions.playerMode != PlayerMode.Single">
+      <span class="light">Round {{game.round}} / {{totalRound}}</span>
+    </div>
+  </div>
+
+  <div class="textcenter">
+    <a *ngIf="myTurn && !isHidePlayNow" [routerLink]="['/game-play', game.gameId]" class="playnow btn">
+      <span>Your Turn</span>
+      <p>Play Now</p>
+    </a>
+  </div>
+
+  <div *ngIf="myTurn" [class.m-t-44]="isHidePlayNow" class="opponent">
+    <p class="dark">{{remainingHours }}:{{remainingMinutes}} hrs</p>
+    <p class="ellipsis">remaining to play your turn</p>
+  </div>
+
+  <div *ngIf="game.GameStatus === gameStatus.AVAILABLE_FOR_OPPONENT || game.GameStatus === gameStatus.WAITING_FOR_FRIEND_INVITATION_ACCEPTANCE || game.GameStatus === gameStatus.WAITING_FOR_RANDOM_PLAYER_INVITATION_ACCEPTANCE"
+    class="opponent">
+    <a class="btn-share waiting-for-opponent">Waiting for
+      <p>Opponent</p>
+    </a>
+  </div>
+
+  <div *ngIf="!myTurn && game.GameStatus === gameStatus.WAITING_FOR_NEXT_Q" class="opponent">
+    <a class="btn-share opponent-turn">Opponent's Turn </a>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<ns-action-bar [title]="isShowPreview ? 'Question Preview' : actionBarTxt" (isBackPress)="back($event)"
+    [emitBackEvent]="editQuestion || isShowPreview ? true : false" class="SF-Pro-Regular" showAdd="true">
+</ns-action-bar>
+<GridLayout rows="*,auto" columns="*">
+    <StackLayout>
+        <StackLayout *ngIf="loaderBusy && !isShowPreview">
+            <ActivityIndicator [busy]="loaderBusy" width="100" height="100" marginTop="225" class="activity-indicator">
+            </ActivityIndicator>
+        </StackLayout>
+        <GridLayout [class.dialogOpen]="isShowPreview" rows="*,auto" columns="*" class="submit-question">
+            <WebView row="0" col="0" width="100%" height="auto" #webView id="questionWebView"
+                (loaded)="webViewLoaded($event)"></WebView>
+            <GridLayout row="1" col="0" columns="*,50,*" iosOverflowSafeArea="false" class="button-section">
+                <Button stlRippleEffect row="0" col="0" colspan="2" width="100%" [text]="submitBtnTxt"
+          
+                    [ngClass]="{'enable-btn' : isQFormValid, 'disable-btn' : !isQFormValid }" class="question-buttons"
+                    (tap)="getQuestion()"  [isEnabled]="isQFormValid"></Button>
+                <FlexboxLayout stlRippleEffect borderRadius="3" class="enable-btn-preview" row="0" col="2"
+                    orientation="horizontal" justifyContent="center" padding="12" (tap)="preview()">
+                    <Label text="Preview" textWrap="true"></Label>
+                </FlexboxLayout>
+            </GridLayout>
+            <StackLayout height="100%" class="dialog__wrapper">
+                <app-preview-question-dialog [question]="previewQuestion" [categoryDictionary]="categories">
+                </app-preview-question-dialog>
+            </StackLayout>
+        </GridLayout>
+
+    </StackLayout>
+    <Absolutelayout *ngIf="platform.isIOS" row="1" verticalAlignment="bottom">
+        <bottom-bar [screen]="'profile-settings'" *ngIf="displayBottomBar">
+        </bottom-bar>
+    </Absolutelayout>
+
+</GridLayout>

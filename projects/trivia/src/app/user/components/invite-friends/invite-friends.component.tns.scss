@@ -1,0 +1,40 @@
+.friend-list{
+  border-color:#fff #fff #E8E8E8 #fff;
+  border-width: 0 0 2 0;
+  padding:10 0 10 0;
+  font-size: 16;
+}
+
+.won{
+  font-size: 16;
+  color: #212121;
+  font-weight: bold;
+}
+
+.played{
+  font-size: 16;
+  color: #212121;
+  font-weight: bold;
+}
+
+.name{
+  color: #927c7c;
+}
+
+.h-label{
+  padding:20 0 20 0;
+  font-size: 15px;
+  color: #B7B7B7;
+}
+
+.fab-button1 {
+	height: 50;
+	width: 50; /// this is required on iOS - Android does not require width so you might need to adjust styles
+	margin: 15;
+	background-color: #f50057;
+	horizontal-align: right;
+	vertical-align: bottom;
+}
+.main-container {
+  padding:0 12;
+}

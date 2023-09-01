@@ -1,0 +1,55 @@
+<bottom-bar [isDrawerOpenOrClosed]="isDrawerOpen" [screen]="'drawer'"></bottom-bar>
+<FlexboxLayout flexDirection="column" class="drawer SF-Pro-Regular">
+    <GridLayout rows="*" columns="*">
+        <GridLayout row="0">
+            <ScrollView>
+                <FlexboxLayout flexDirection="column">
+                    <FlexboxLayout *ngIf="authProvider.isAuthenticated" class="padding-label" >
+                        <Label text="Game Profile"
+                            [ngStyle]="{color: (activeMenu === 'Game Profile' ? '#077ad6' : '#3b5998')}"
+                            android:fontSize="18" textWrap="true" stlRippleEffect
+                            stlBackgroundColor="transparent" stlBackgroundColorAfter="transparent"
+                            (rippleTap)="navigateToGameProfile()"></Label>
+                    </FlexboxLayout>
+                    <!-- <FlexboxLayout *ngIf="authProvider.isAuthenticated" class="padding-label" stlRippleEffect
+                        stlBackgroundColor="transparent" stlBackgroundColorAfter="transparent"
+                        (rippleTap)="navigateToRecentGames()">
+                        <Label text="Recently Completed Games"
+                            [ngStyle]="{color: (activeMenu === 'Recently Completed Games' ? '#077ad6' : '#3b5998')}"
+                            android:fontSize="18" textWrap="true"></Label>
+                    </FlexboxLayout> -->
+                    <FlexboxLayout *ngIf="authProvider.isAuthenticated" class="padding-label" >
+                        <Label text="Questions"
+                            [ngStyle]="{color: (activeMenu === 'My Questions' ? '#077ad6' : '#3b5998')}"
+                            android:fontSize="18" textWrap="true" stlRippleEffect
+                            stlBackgroundColor="transparent" stlBackgroundColorAfter="transparent"
+                            (rippleTap)="navigateToMyQuestion()"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout *ngIf="authProvider.isAuthenticated" class="padding-label" >
+                        <Label text="User Account"
+                            [ngStyle]="{color: (activeMenu === 'Profile' ? '#077ad6' : '#3b5998')}"
+                            android:fontSize="18" textWrap="true"
+                            stlRippleEffect
+                        stlBackgroundColor="transparent" stlBackgroundColorAfter="transparent"
+                        (rippleTap)="navigateToProfileSettings()"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout *ngIf="!authProvider.isAuthenticated" class="padding-label" >
+                        <Label stlRippleEffect
+                        stlBackgroundColor="transparent" stlBackgroundColorAfter="transparent" (rippleTap)="login()" text="Login" [ngStyle]="{color: (activeMenu === 'login/signup' ? '#077ad6' : '#3b5998')}"
+                            android:fontSize="18"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout [isUserInteractionEnabled]="!loader" *ngIf="authProvider.isAuthenticated"
+                        class="padding-label" >
+                        <Label stlRippleEffect stlBackgroundColor="transparent"
+                        stlBackgroundColorAfter="transparent" (rippleTap)="logout()" text="Logout"
+                            [ngStyle]="{color: (activeMenu === 'login/signup' ? '#077ad6' : '#f44336')}"
+                            android:fontSize="18"></Label>
+                        <ActivityIndicator *ngIf="loader" color="#3b5998" ios:width="25" ios:height="25"
+                            android:width="25" android:height="25" busy="true" class="activity-indicator">
+                        </ActivityIndicator>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </ScrollView>
+        </GridLayout>
+    </GridLayout>
+</FlexboxLayout>

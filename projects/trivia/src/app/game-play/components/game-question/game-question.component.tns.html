@@ -1,0 +1,89 @@
+<GridLayout>
+  <ScrollView [class.m-b-70]="showContinueBtn || ((answeredIndex>=0 || doPlay === false) && !showContinueBtn)"
+    id="scrollList">
+    <StackLayout margin="0 10" backgroundColor="#ffffff">
+      <GridLayout *ngIf="user && user!==null && playerMode == PlayerMode.Single" rows="*,*,*,*" columns="*,*"
+        class="sideStackLayoutHeader" padding="10 0">
+        <app-user-card [user]="user" [userId]="user.userId" [isGamePlay]=true
+          [type]="userCardType.USER_IMAGE_NAME_WITH_SCORE_IN_GAME_PLAY_SINGLE_PLAYER"
+          [otherInfo]="{ applicationSettings: applicationSettings, isBadgeWithCategory : (game?.gameOptions?.isBadgeWithCategory) ? true : false, totalBadges: totalBadges, earnedBadges: earnedBadges, bits: account.bits, bytes:account.bytes, progressValue: progressValue, correctCount:correctCount,questionRound:questionRound,totalRound:totalRound,actionText:actionText }">
+        </app-user-card>
+        
+      </GridLayout>
+      <GridLayout margin="0 10" *ngIf="user && user!==null && playerMode == PlayerMode.Opponent" rows="*,*,*"
+        columns="*" class="sideStackLayoutHeader" paddingTop="10">
+        <app-user-card [user]="user" [userId]="user.userId" [isGamePlay]=true
+          [type]="userCardType.USER_IMAGE_NAME_WITH_SCORE_IN_GAME_PLAY_TWO_PLAYER"
+          [otherInfo]="{ applicationSettings: applicationSettings, isBadgeWithCategory : (game?.gameOptions?.isBadgeWithCategory) ? true : false, totalBadges: totalBadges, earnedBadgesByOtherUser: earnedBadgesByOtherUser, earnedBadges: earnedBadges, progressValue: progressValue, correctCount:correctCount,questionRound:questionRound,totalRound:totalRound,otherPlayer:otherPlayer}">
+        </app-user-card>
+      </GridLayout>
+
+      <FlexboxLayout justifyContent="center">
+        <Label
+          visibility="{{ (answeredIndex!==undefined && correctAnswerIndex === answeredIndex)  ? 'visible'  : 'collapsed' }}"
+          class="correct-text green" text="CORRECT" textWrap="true" style.textAlignment="center"></Label>
+
+        <Label
+          visibility="{{(answeredIndex!==undefined && correctAnswerIndex !== answeredIndex) ? 'visible'  : 'collapsed' }}"
+          class="incorrect-text red" text="INCORRECT" textWrap="true" style.textAlignment="center"></Label>
+
+        <Label *ngIf="(continueNext || !doPlay) && progressValue>=100" class="timeout-text yellow" text="TIMES UP" textWrap="true"
+          style.textAlignment="center"></Label>
+      </FlexboxLayout>
+      <render-box [setBackgroundColor]="'#f7f7f7'">
+        <StackLayout padding="20 10" class="game-question">
+          <render-question [question]="question" [questionIndex]="questionIndex" [theme]="'light'"></render-question>
+          <FlexboxLayout *ngIf="question && question.tags" margin="7 0 7 -2.5" flexWrap="wrap">
+            <Label *ngIf="categoryName" text="{{categoryName}}"
+              [style.backgroundColor]="theme === 'dark' ? '#405177':'#e2e2e2'"
+              [style.color]="theme === 'dark' ? '#a5a5a5' : '#808080'" borderRadius="22" margin="2.5 2.5" padding="5 10"
+              textWrap="true"></Label>
+            <Label *ngFor="let tags of question.tags" [style.backgroundColor]="theme === 'dark' ? '#405177':'#e2e2e2'"
+              [style.color]="theme === 'dark' ? '#a5a5a5' : '#808080'" borderRadius="22" margin="2.5 2.5" [text]="tags"
+              padding="5 10" textWrap="true"></Label>
+            <GridLayout marginTop="15" marginLeft="2.5">
+              <Label [style.color]="theme === 'dark' ? '#a5a5a5' : '#000000'" fontSize="17" text="Choose any one"
+                textWrap="true"></Label>
+            </GridLayout>
+          </FlexboxLayout>
+          <StackLayout #renderView *ngIf="question">
+            <StackLayout class="question-answered SF-Pro-Medium" margin="10 0 10 0"
+              *ngFor="let answer of question.answers;let i=index" [class.players-answer]="answeredIndex === i"
+              [class.wrong]="answeredIndex === i && correctAnswerIndex !== i" [class.right]="correctAnswerIndex === i"
+              stlRippleEffect (rippleTap)="answerButtonClicked(answer,i)" [isUserInteractionEnabled]="doPlay"
+              borderColor="#a5a5a5" borderWidth="1" borderRadius="2"
+              [style.backgroundColor]="answeredIndex === i && correctAnswerIndex !== i ? '#d54937' : ''"
+              [style.backgroundColor]="correctAnswerIndex === i ? '#71b02f' : ''">
+
+              <render-answer [answer]="answer" [isWrong]="answeredIndex === i && correctAnswerIndex !== i"
+                [isRight]="correctAnswerIndex === i" [doPlay]="doPlay" [isUserInteractionEnabled]="doPlay"
+                [isGameAnswer]="true" [theme]="'light'"></render-answer>
+            </StackLayout>
+          </StackLayout>
+          <StackLayout orientation="horizontal" horizontalAlignment="left">
+            <author *ngIf="question" [isGamePlay]=true [userId]="question.created_uid"></author>
+          </StackLayout>
+          <StackLayout orientation="horizontal" horizontalAlignment="center">
+            <user-reaction *ngIf="user && question && showContinueBtn" [user]='user' [question]='question'>
+            </user-reaction>
+          </StackLayout>
+        </StackLayout>
+      </render-box>
+    </StackLayout>
+  </ScrollView>
+  <AbsoluteLayout backgroundColor="#ffffff" verticalAlignment="bottom">
+    <FlexboxLayout *ngIf="!gameOver && !threeConsecutiveAnswer && (answeredIndex>=0 || doPlay === false)" (rippleTap)="continueButtonClicked($event)" width="100%" class="SF-Pro-Medium btn-transparent" justifyContent="center" stlRippleEffect>
+        <Label verticleAlignment="center" text="Next Round" ></Label>
+        <ActivityIndicator  *ngIf="showLoader" marginLeft="10" verticalAlignment="center" color="blue" ios:width="25" ios:height="25"
+          android:width="25" android:height="25" busy="true" class="activity-indicator">
+        </ActivityIndicator>
+    </FlexboxLayout>
+
+    <FlexboxLayout *ngIf="gameOver || threeConsecutiveAnswer" (rippleTap)="checkRoundOver($event)" width="100%" class="Hind-Medium btn-transparent" justifyContent="center" stlRippleEffect>
+        <Label verticleAlignment="center" text="Next Round" ></Label>
+        <ActivityIndicator  *ngIf="showLoader" marginLeft="10" verticalAlignment="center" color="blue" ios:width="25" ios:height="25"
+          android:width="25" android:height="25" busy="true" class="activity-indicator">
+        </ActivityIndicator>
+    </FlexboxLayout>
+  </AbsoluteLayout>
+</GridLayout>

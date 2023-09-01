@@ -1,0 +1,56 @@
+.sideStackLayoutHeader {
+  background-color: #13284f;
+}
+
+.sideStackLayout {
+  background-color: #13284f;
+  color: #d7d7d7;
+  font-size: 14;
+}
+
+.sideLabel {
+  padding: 20 10;
+  font-size: 14;
+  color: #d7d7d7;
+}
+
+.sideLightGrayLabel {
+  background-color: lightgray;
+}
+
+#icmenu {
+  width: 50;
+  height: 50;
+}
+
+.icmenu {
+  width: 50;
+  height: 50;
+}
+
+.ou-allez-vous {
+  /* padding: 8 8 8 0 ; */
+  font-size: 18;
+  width: 92%;
+  height: 50;
+  color: black;
+}
+
+.center {
+  text-align: center;
+}
+
+.padding-label .active-menu {
+  color: #077ad6 !important;
+  font-weight: 600;
+  font-family: "Roboto", "Roboto-Bold";
+}
+
+.padding-label {
+  padding: 10 35 10 35;
+  justify-content: space-between;
+}
+
+.drawer{
+  background-color: #f9f9f9;
+}

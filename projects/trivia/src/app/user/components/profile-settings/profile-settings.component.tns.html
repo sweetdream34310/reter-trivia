@@ -1,0 +1,193 @@
+<ns-action-bar title="Profile" class="SF-Pro-Regular" showAdd="true"></ns-action-bar>
+<GridLayout rows="*,auto" columns="*">
+  <StackLayout row="0" iosOverflowSafeArea="false" class="profileSettings ">
+    <ActivityIndicator visibility="{{ loaderBusy ? 'visible' : 'collapsed' }}" [busy]="loaderBusy" width="100"
+      height="100" marginTop="225" class="activity-indicator"></ActivityIndicator>
+    <ScrollView visibility="{{ !loaderBusy ? 'visible' : 'collapsed' }}" iosOverflowSafeArea="false">
+      <PreviousNextView>
+        <StackLayout class="profile" (tap)="hideKeyboard()" *ngIf="userForm" [formGroup]="userForm"
+          iosOverflowSafeArea="false">
+
+          <!-- Profile Image -->
+          <StackLayout class="profile_image" iosOverflowSafeArea="false">
+            <AbsoluteLayout class="profile_image--center" iosOverflowSafeArea="false" horizontalAlignment="center">
+              <Image [src]="profileImage.image" stretch="aspectFill"  stlRippleEffect (rippleTap)="userType ===  0 ? onTakePhoto() : ''">
+              </Image>
+              <CardView class="profile_image--edit" top="60" left="65" android:elevation="5" ios:elevation="40"
+                android:radius="50" ios:radius="18" iosOverflowSafeArea="false"  stlBackgroundColor="white" stlOpacity="0.9"   stlRippleEffect (rippleTap)="onTakePhoto()">
+                <Label textAlignment="center" verticalAlignment="center"  text="&#xe927;"
+                  class="ico icon-edit" textWrap="true"></Label>
+              </CardView>
+            </AbsoluteLayout>
+          </StackLayout>
+
+          <!-- displayName -->
+          <GridLayout rows="auto,*" columns="*">
+            <FlexboxLayout justifyContent="center" row="0" col="0">
+              <StackLayout orientation="horizontal" justifyContent="center">
+                <GridLayout rows="*" columns="*,50">
+                  <StackLayout row="0" col="0" marginLeft="50" horizontalAlignment="center"
+                    [visibility]="singleFieldEdit.displayName ? 'visible' : 'collapsed'" ios:paddingTop="5">
+                    <app-check-display-name formControlName="displayName" hint="Display Name" isProfilePage="true"
+                      [disabled]="singleFieldEdit.displayName" horizontalAlignment="center">
+                    </app-check-display-name>
+                  </StackLayout>
+                  <Label [text]="user.displayName" class="user-name-disabled" marginLeft="50"
+                    horizontalAlignment="center" margin="10 0" verticalAlignment="middle" row="0" col="0"
+                    textWrap="true" *ngIf="!singleFieldEdit.displayName"></Label>
+                  <FlexboxLayout row="0" col="1" col="1" flexDirection="column" justifyContent="center" >
+                    <Label *ngIf="!singleFieldEdit.displayName && !isSavingUserName"
+                      (tap)="editSingleField('displayName')" color="#14418B" fontSize="20" alignSelf="center"
+                      class="ico icon-edit" textWrap="true" text="&#xe927;" verticalAlignment="middle"
+                      ios:marginBottom="0"  padding="5"></Label>
+                    <Label
+                      *ngIf="(singleFieldEdit.displayName && userForm.value.displayName !=='') && !isSavingUserName"
+                      (tap)="onSubmit(true, 'displayName')" alignSelf="center" color="#14418B" fontSize="26" class="fa"
+                      text="&#xf058;" verticalAlignment="middle" ios:marginBottom="10" padding="5"> </Label>
+                    <ActivityIndicator *ngIf="isSavingUserName" alignSelf="center" color="#3b5998" ios:width="25"
+                      ios:height="25" android:width="25" android:height="25" busy="true" class="activity-indicator">
+                    </ActivityIndicator>
+                  </FlexboxLayout>
+
+
+                </GridLayout>
+              </StackLayout>
+
+            </FlexboxLayout>
+            <FlexboxLayout justifyContent="center" flexWrap="wrap" row="1" col="0">
+              <Label
+                *ngIf="userForm.controls.displayName.errors && userForm.controls.displayName.errors.required && !userForm.controls.displayName.pristine"
+                class=" error" textWrap="true" text="Display Name is required!"></Label>
+              <Label *ngIf="userForm.controls.displayName.errors && userForm.controls.displayName.errors.exist"
+                class=" error" textWrap="true" text="Display Name is already taken by other user"></Label>
+            </FlexboxLayout>
+          </GridLayout>
+
+          <!-- Name -->
+          <app-animation-box [fieldName]="'name'" (formSubmitted)='formSubmitted($event)'
+            [fieldValue]="userForm.controls['name'].value" (formEditOpen)='formEditOpen($event)' [isValid]="!userForm.controls.name.errors">
+            <TextField textField #textFieldContent hint="Name" formControlName="name" paddingLeft="4" ios:marginTop="5"
+              android:paddingBottom="10" android:marginTop="-5"></TextField>
+            <StackLayout errorMsg width="90%" row="1">
+              <Label *ngIf="userForm.controls.name.errors?.required && !userForm.controls.name.pristine" class=" error"
+                textWrap="true" text="Name is required!"></Label>
+
+              <Label *ngIf="userForm.controls.name.errors?.name && !userForm.controls.name.pristine" class="error"
+                textWrap="true" text="Name is Invalid!"></Label>
+            </StackLayout>
+          </app-animation-box>
+
+
+          <app-animation-box [fieldName]="'email'" (formSubmitted)='formSubmitted($event)' [fieldValue]="user.email"
+            (formEditOpen)='formEditOpen($event)' [isValid]="!userForm.controls.email.errors" [isDisplay]="(currentAuthProvider===authProviderConstants.PHONE)">
+            <TextField  textField #textFieldContent 
+            hint="Email" formControlName="email" paddingLeft="4" ios:marginTop="5"
+              android:paddingBottom="10" android:marginTop="-5"> </TextField>
+            <StackLayout errorMsg width="90%" row="1">
+              <Label *ngIf="userForm.controls.email.errors?.required && !userForm.controls.email.pristine"
+                class=" error" textWrap="true" text="Email is required!"></Label>
+
+              <Label *ngIf="userForm.controls.email.errors?.email && !userForm.controls.email.pristine" class="error"
+                textWrap="true" text="Email is Invalid!"></Label>
+            </StackLayout>
+          </app-animation-box>
+
+          <app-animation-box [fieldName]="'phoneNo'" (formSubmitted)='formSubmitted($event)' [fieldValue]="user.phoneNo"
+            (formEditOpen)='formEditOpen($event)' [isValid]="!userForm.controls.phoneNo.errors" [isDisplay]="(currentAuthProvider===authProviderConstants.GOOGLE || currentAuthProvider===authProviderConstants.FACEBOOK || currentAuthProvider===authProviderConstants.PASSWORD || currentAuthProvider===authProviderConstants.APPLE)">
+            <TextField textField #textFieldContent hint="Phone" formControlName="phoneNo" paddingLeft="4" ios:marginTop="5"
+              android:paddingBottom="10" android:marginTop="-5">
+            </TextField>
+            <StackLayout errorMsg width="90%" row="1">
+              <Label errorMsg *ngIf="userForm.controls.phoneNo.errors && !userForm.controls.phoneNo.pristine"
+                class="error" textWrap="true" text="Enter valid phone!"></Label>
+            </StackLayout>
+          </app-animation-box>
+
+          <!-- Password -->
+          <FlexboxLayout margin="5 0" justifyContent="space-between" orientation="horizontal" borderRadius="5"
+            class="edit-field" *ngIf="currentAuthProvider===authProviderConstants.PASSWORD">
+            <FlexboxLayout flexDirection="column">
+              <Label alignSelf="flex-start" text="Password" textWrap="true" class="label-field"></Label>
+              <Label alignSelf="flex-start" text="XXXXXX" textWrap="true" class="label-value"></Label>
+            </FlexboxLayout>
+            <Label alignSelf="center" color="#14418B" fontSize="20" class="ico icon-edit" textWrap="true"
+              text="&#xe927;" (tap)="redirectToChangePassword()" padding="5"></Label>
+          </FlexboxLayout>
+
+          <app-animation-box [fieldName]="'location'" (formSubmitted)='formSubmitted($event)' (getCurrentLocation)="getCurrentLocation($event)"
+            [fieldValue]="user.location" (formEditOpen)='formEditOpen($event)' [isValid]="true" [type]="'location'">
+            <RadAutoCompleteTextView textField #textFieldContent #acLocation [items]="dataLocation" suggestMode="Suggest"
+              showCloseButton="false" (didAutoComplete)="onTextChangedLocation($event);changedLocation($event)"
+              (textChanged)="onTextChangedLocation($event)" (loaded)="onLoadedLocation($event)" ios:marginTop="0"
+              android:paddingBottom="10" android:marginTop="-5">
+              <SuggestionView tkAutoCompleteSuggestionView marginTop="20">
+                <ng-template tkSuggestionItemTemplate let-item="item">
+                  <StackLayout orientation="vertical" padding="10">
+                    <Label [text]="item.text"></Label>
+                  </StackLayout>
+                </ng-template>
+              </SuggestionView>
+            </RadAutoCompleteTextView>
+            <StackLayout errorMsg width="90%">
+              <Label *ngIf="(userForm.controls.location.errors)" class="error" textWrap="true"
+                text="Enter location!"></Label>
+            </StackLayout>
+          </app-animation-box>
+
+
+          <!-- Social Handles -->
+          <StackLayout class="list-view social-section" iosOverflowSafeArea="false" marginTop="5" marginBottom="40"
+            *ngIf="socialProfileSettings && socialProfileSettings.length > 0" class="edit-field">
+            <FlexboxLayout class="grid-label p-15" justifyContent="space-between" iosOverflowSafeArea="false">
+              <Label textWrap="true" text="Social Handles"></Label>
+              <Label *ngIf="!singleFieldEdit.socialProfile" alignSelf="center" color="#14418B" fontSize="20"
+                class="ico icon-edit" textWrap="true" text="&#xe927;" stlRippleEffect
+                (rippleTap)="formEditOpen('socialProfile');" padding="5">
+              </Label>
+              <Label alignSelf="center" *ngIf="singleFieldEdit.socialProfile" (tap)="onSubmit(false, 'socialProfile');"
+                color="#14418B" fontSize="24" class="fa" text="&#xf058;" padding="5">
+              </Label>
+            </FlexboxLayout>
+            <StackLayout class="input-field" *ngFor="let profile of socialProfileSettings; let i=index"
+              iosOverflowSafeArea="false">
+              <GridLayout rows="auto" columns="auto, *" *ngIf="profile?.enable" [order]="profile?.position"
+                padding="10 0">
+                <Label verticalAlignment="center" row="0" col="0" text="{{getIcon(profile?.icon)}}" fontSize="22"
+                  margin="0 5 0 5" paddingRight="15" class="fa text-black"></Label>
+                <TextField #socialField row="0" col="1" width="100%" hint="username" [editable]="profile?.disable"
+                  [formControlName]="profile.social_name">
+                </TextField>
+                <!-- <Label *ngIf="userForm.get(profile.social_name).errors" class="error"
+                  text="Please enter valid profile id" textWrap="true"></Label> -->
+              </GridLayout>
+
+              <GridLayout *ngIf="userType !== 0 && profile.enable" rows="auto,*" columns="*"
+                iosOverflowSafeArea="false">
+                <Label class="grid-label-text" [text]="profile.display" row="0" col="0" textWrap="true"></Label>
+                <StackLayout marginLeft="14" marginTop="8" row="1" col="0" orientation="horizontal"
+                  iosOverflowSafeArea="false">
+                  <Label class="grid-label-text"
+                    (tap)="openUrl(profile?.url, userForm.get([profile.social_name]).value)" color="blue"
+                    text="{{profile?.url}}{{userForm.get([profile.social_name]).value}}" textWrap="true"></Label>
+                </StackLayout>
+              </GridLayout>
+            </StackLayout>
+          </StackLayout>
+
+          <Label text="PROVIDE FEEDBACK" horizontalAlignment="left" stlRippleEffect (rippleTap)="navigateToUserFeedback()" color="#14418B"
+            fontSize="18" padding="10" textWrap="true"></Label>
+          <Label text="PRIVACY POLICY" horizontalAlignment="left" stlRippleEffect (rippleTap)="navigateToPrivacyPolicy()" color="#14418B"
+            fontSize="18" padding="10" textWrap="true"></Label>
+          <Label text="TERMS & CONDITIONS" horizontalAlignment="left" stlRippleEffect (rippleTap)="navigateToTermsConditions()" color="#14418B"
+            fontSize="18" padding="10" textWrap="true"></Label>
+
+        </StackLayout>
+      </PreviousNextView>
+    </ScrollView>
+  </StackLayout>
+
+  <Absolutelayout *ngIf="platform.isIOS" row="1" verticalAlignment="bottom">
+    <bottom-bar [screen]="'profile-settings'">
+    </bottom-bar>
+  </Absolutelayout>
+</GridLayout>

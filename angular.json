@@ -1,0 +1,801 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "trivia": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/trivia",
+      "sourceRoot": "projects/trivia/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "functions/dist/browser",
+            "index": "projects/trivia/src/index.html",
+            "main": "projects/trivia/src/main.ts",
+            "polyfills": "projects/trivia/src/polyfills.ts",
+            "tsConfig": "projects/trivia/tsconfig.app.json",
+            "assets": [
+              "projects/trivia/src/assets",
+              "projects/trivia/src/favicon.ico",
+              "projects/trivia/src/manifest.json",
+              "projects/trivia/src/robots.txt",
+              "projects/trivia/src/manifest.json"
+            ],
+            "styles": [
+              "projects/trivia/src/styles/rwa-trivia.theme.scss",
+              "projects/trivia/src/styles/styles.scss",
+              "projects/trivia/src/styles/global.scss",
+              "projects/trivia/src/styles/light.theme.scss",
+              "projects/trivia/src/styles/dark.theme.scss",
+              "projects/trivia/src/styles/mathquill.scss",
+              "projects/trivia/src/styles/icon-moon.scss",
+              "./node_modules/firebaseui/dist/firebaseui.css",
+              "./node_modules/ng-quill-tex/assets/theme.css",
+              "./node_modules/mathquill/formula/formula.css",
+              "./node_modules/katex/dist/katex.css",
+              "./node_modules/highlightjs/styles/arduino-light.css",
+              "./node_modules/quill/dist/quill.snow.css"
+            ],
+            "scripts": [
+              "./node_modules/firebaseui/dist/firebaseui.js",
+              "projects/trivia/src/scripts/google-analytics.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/mathquill/build/mathquill.min.js",
+              "./node_modules/highlightjs/highlight.pack.min.js",
+              "./node_modules/katex/dist/katex.min.js",
+              "./node_modules/quill/dist/quill.js"
+            ]
+          },
+          "configurations": {
+            "trivia-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ],
+              "serviceWorker": false
+            },
+            "trivia-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "trivia-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.prod.ts"
+                }
+              ],
+              "scripts": [
+                "projects/trivia/src/scripts/google-analytics.js",
+                "./node_modules/firebaseui/dist/firebaseui.js",
+                "projects/trivia/src/scripts/google-analytics.js",
+                "./node_modules/jquery/dist/jquery.min.js",
+                "./node_modules/mathquill/build/mathquill.min.js",
+                "./node_modules/highlightjs/highlight.pack.min.js",
+                "./node_modules/katex/dist/katex.min.js",
+                "./node_modules/quill/dist/quill.js"
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "bitwiser-edu-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ],
+              "serviceWorker": false
+            },
+            "bitwiser-edu-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "bitwiser-edu-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.prod.ts"
+                }
+              ],
+              "scripts": [
+                "projects/trivia/src/scripts/google-analytics.js"
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "trivia:build"
+          },
+          "configurations": {
+            "trivia-dev": {
+              "browserTarget": "trivia:build:trivia-dev"
+            },
+            "trivia-staging": {
+              "browserTarget": "trivia:build:trivia-staging"
+            },
+            "trivia-production": {
+              "browserTarget": "trivia:build:trivia-production"
+            },
+            "bitwiser-edu-dev": {
+              "browserTarget": "trivia:build:bitwiser-edu-dev"
+            },
+            "bitwiser-edu-staging": {
+              "browserTarget": "trivia:build:bitwiser-edu-staging"
+            },
+            "bitwiser-edu-production": {
+              "browserTarget": "trivia:build:bitwiser-edu-production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "trivia:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "polyfills": "projects/trivia/src/polyfills.ts",
+            "tsConfig": "/../trivia/tsconfig.spec.json",
+            "scripts": [],
+            "styles": [
+              "projects/trivia/src/styles/rwa-trivia.theme.scss",
+              "projects/trivia/src/styles/styles.scss",
+              "projects/trivia/src/styles/global.scss",
+              "projects/trivia/src/styles/light.theme.scss",
+              "projects/trivia/src/styles/dark.theme.scss"
+            ],
+            "assets": [
+              "projects/trivia/src/assets",
+              "projects/trivia/src/favicon.ico",
+              "projects/trivia/src/manifest.json",
+              "projects/trivia/src/robots.txt",
+              "projects/src/manifest.json"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/trivia/tsconfig.app.json",
+              "projects/trivia/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "functions/dist/server",
+            "main": "projects/trivia/src/main.server.ts",
+            "tsConfig": "projects/trivia/tsconfig.server.json",
+            "sourceMap": false,
+            "optimization": true
+          }
+        }
+      }
+    },
+    "trivia-e2e": {
+      "root": "projects/trivia-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/trivia-e2e/protractor.conf.js",
+            "devServerTarget": "trivia:serve"
+          },
+          "configurations": {
+            "trivia-production": {
+              "devServerTarget": "trivia:serve:trivia-production"
+            },
+            "bitwiser-edu-production": {
+              "devServerTarget": "trivia:serve:bitwiser-edu-production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/trivia-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "trivia-admin": {
+      "root": "projects/trivia-admin/",
+      "sourceRoot": "projects/trivia-admin/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/admin",
+            "baseHref": "/admin",
+            "deployUrl": "/admin/",
+            "index": "projects/trivia-admin/src/index.html",
+            "main": "projects/trivia-admin/src/main.ts",
+            "polyfills": "projects/trivia-admin/src/polyfills.ts",
+            "tsConfig": "projects/trivia-admin/tsconfig.app.json",
+            "assets": [
+              "projects/trivia-admin/src/assets",
+              "projects/trivia-admin/src/favicon.ico",
+              "projects/trivia-admin/src/manifest.json"
+            ],
+            "styles": [
+              "projects/trivia-admin/src/styles/rwa-trivia.theme.scss",
+              "projects/trivia-admin/src/styles/styles.scss",
+              "projects/trivia-admin/src/styles/global.scss",
+              "projects/trivia-admin/src/styles/light.theme.scss",
+              "projects/trivia-admin/src/styles/dark.theme.scss",
+              "./node_modules/ng-quill-tex/assets/theme.css",
+              "./node_modules/mathquill/formula/formula.css",
+              "./node_modules/katex/dist/katex.css",
+              "./node_modules/highlightjs/styles/arduino-light.css",
+              "./node_modules/quill/dist/quill.snow.css"
+            ],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/mathquill/build/mathquill.min.js",
+              "./node_modules/highlightjs/highlight.pack.min.js",
+              "./node_modules/katex/dist/katex.min.js"
+            ]
+          },
+          "configurations": {
+            "trivia-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ]
+            },
+            "trivia-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "trivia-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "bitwiser-edu-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ]
+            },
+            "bitwiser-edu-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "bitwiser-edu-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "trivia-admin:build"
+          },
+          "configurations": {
+            "trivia-dev": {
+              "browserTarget": "trivia-admin:build:trivia-dev"
+            },
+            "trivia-staging": {
+              "browserTarget": "trivia-admin:build:trivia-staging"
+            },
+            "trivia-production": {
+              "browserTarget": "trivia-admin:build:trivia-production"
+            },
+            "bitwiser-edu-dev": {
+              "browserTarget": "trivia-admin:build:bitwiser-edu-dev"
+            },
+            "bitwiser-edu-staging": {
+              "browserTarget": "trivia-admin:build:bitwiser-edu-staging"
+            },
+            "bitwiser-edu-production": {
+              "browserTarget": "trivia-admin:build:bitwiser-edu-production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "trivia-admin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "polyfills": "projects/trivia-admin/src/polyfills.ts",
+            "tsConfig": "/../trivia-admin/tsconfig.spec.json", 
+            "styles": [
+              "projects/trivia-admin/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/trivia-admin/src/favicon.ico",
+              "projects/trivia-admin/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/trivia-admin/tsconfig.app.json",
+              "projects/trivia-admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "functions/dist/server",
+            "main": "projects/trivia-admin/src/main.server.ts",
+            "tsConfig": "projects/trivia-admin/tsconfig.server.json"
+          }
+        }
+      }
+    },
+    "trivia-admin-e2e": {
+      "root": "projects/trivia-admin-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/trivia-admin-e2e/protractor.conf.js",
+            "devServerTarget": "trivia-admin:serve"
+          },
+          "configurations": {
+            "trivia-production": {
+              "devServerTarget": "trivia-admin:serve:trivia-production"
+            },
+            "bitwiser-edu-production": {
+              "devServerTarget": "trivia-admin:serve:bitwiser-edu-production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/trivia-admin-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "shared-library": {
+      "root": "projects/shared-library",
+      "sourceRoot": "projects/shared-library/src",
+      "projectType": "library",
+      "prefix": "stl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/shared-library/tsconfig.lib.json",
+            "project": "projects/shared-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/shared-library/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {           
+            "tsConfig":"/../shared-library/tsconfig.spec.json"            
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/shared-library/tsconfig.lib.json",
+              "projects/shared-library/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "trivia-editor": {
+      "root": "projects/trivia-editor/",
+      "sourceRoot": "projects/trivia-editor/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/editor",
+            "baseHref": "/editor",
+            "deployUrl": "/editor/",
+            "index": "projects/trivia-editor/src/index.html",
+            "main": "projects/trivia-editor/src/main.ts",
+            "polyfills": "projects/trivia-editor/src/polyfills.ts",
+            "tsConfig": "projects/trivia-editor/tsconfig.app.json",
+            "assets": [
+              "projects/trivia-editor/src/favicon.ico",
+              "projects/trivia-editor/src/assets"
+            ],
+            "styles": [
+              "projects/trivia/src/styles/rwa-trivia.theme.scss",
+              "projects/trivia/src/styles/global.scss",
+              "projects/trivia-editor/src/styles.scss",
+              "./node_modules/ng-quill-tex/assets/theme.css",
+              "./node_modules/mathquill/formula/formula.css",
+              "./node_modules/katex/dist/katex.css",
+              "./node_modules/highlightjs/styles/arduino-light.css",
+              "./node_modules/quill/dist/quill.snow.css"
+            ],
+            "scripts": [
+              "projects/trivia-editor/src/assets/js/nativescript-webview-interface.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/mathquill/build/mathquill.min.js",
+              "./node_modules/highlightjs/highlight.pack.min.js",
+              "./node_modules/katex/dist/katex.min.js",
+              "./node_modules/quill/dist/quill.js"
+            ],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "trivia-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ]
+            },
+            "trivia-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "trivia-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/trivia/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "bitwiser-edu-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ]
+            },
+            "bitwiser-edu-staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.dev.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "bitwiser-edu-production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shared-library/src/lib/environments/environment.ts",
+                  "with": "projects/shared-library/src/lib/environments/bitwiser-edu/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "trivia-editor:build"
+          },
+          "configurations": {
+            "trivia-dev": {
+              "browserTarget": "trivia-editor:build:trivia-dev"
+            },
+            "trivia-staging": {
+              "browserTarget": "trivia-editor:build:trivia-staging"
+            },
+            "trivia-production": {
+              "browserTarget": "trivia-editor:build:trivia-production"
+            },
+            "bitwiser-edu-dev": {
+              "browserTarget": "trivia-editor:build:bitwiser-edu-dev"
+            },
+            "bitwiser-edu-staging": {
+              "browserTarget": "trivia-editor:build:bitwiser-edu-staging"
+            },
+            "bitwiser-edu-production": {
+              "browserTarget": "trivia-editor:build:bitwiser-edu-production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "trivia-editor:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "polyfills": "projects/trivia-editor/src/polyfills.ts",
+            "tsConfig": "/../trivia-editor/tsconfig.spec.json",
+            "styles": [
+              "projects/trivia-editor/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/trivia-editor/src/favicon.ico",
+              "projects/trivia-editor/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/trivia-editor/tsconfig.app.json",
+              "projects/trivia-editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "trivia-editor-e2e": {
+      "root": "projects/trivia-editor-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/trivia-editor-e2e/protractor.conf.js",
+            "devServerTarget": "trivia-editor:serve"
+          },
+          "configurations": {
+            "trivia-production": {
+              "devServerTarget": "trivia-editor:serve:trivia-production"
+            },
+            "bitwiser-edu-production": {
+              "devServerTarget": "trivia-editor:serve:bitwiser-edu-production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/trivia-editor-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "trivia",
+  "schematics": {
+    "@schematics/angular:component": {
+      "inlineTemplate": false,
+      "spec": true,
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}

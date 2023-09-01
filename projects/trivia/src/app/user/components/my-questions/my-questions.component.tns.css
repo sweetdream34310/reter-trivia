@@ -1,0 +1,29 @@
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: none !important;
+}
+
+.fab-button1 {
+	height: 50;
+	width: 50;
+	margin: 15;
+	background-color: #f50057;
+	horizontal-align: right;
+	vertical-align: bottom;
+}
+
+.tab-container{
+	border-width: 1;
+	border-color:#d1d1d1;
+	z-index:0;
+}
+
+.active{
+	border-bottom-width: 3;
+	border-bottom-color: #3b5998;
+	color: #3b5998;
+	z-index:1;
+}

@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "baseUrl": "",
+    "allowJs": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "lib": [
+      "es2018",
+      "dom",
+      "es6",
+      "es2015.iterable"
+    ],
+    "paths": {
+      "shared-library/*": [
+          "../../projects/shared-library/src/lib/*"
+      ],
+      "test/*": ["../../test/*"]
+    },
+    "outDir": "../out-tsc/spec",
+    "module": "commonjs",
+    "target": "es2015",
+    "types": [
+      "jest",
+      "jquery",
+      "jsdom",
+      "node"
+    ]
+  },
+  "files": [
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "**/*.spec.ts",
+    "**/*.d.ts",
+    "**/*.tns.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "platforms",
+    "hooks",
+    "certificates",
+    "configurations",
+    "release"
+  ]
+}
